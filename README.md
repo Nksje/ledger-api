@@ -37,12 +37,31 @@ Interactive docs: http://localhost:8000/docs
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | GET | GET | alt| GET | GET | GET | alt| GET | GET | GET | alcount| GET | GET | GET | alt| GET | GET | GET | al| | GET | GET | GET | alt| GET | GET | GET | alt| GET | GET | GET | al| | GET | GET | GET | alt| GET | GET | GET | alt| GET  ac| GET | GET  cu| GET | GET | GET | alt| GET | GET co| GET | GET | GET | alt| GET | GET | GET n/| GET | GET | GET | alt| GET | GET |
-PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPSTPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPSTPPPPPPPPPPPPPPpePPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPSTPPPPPPPPPPPPPPPPPPPPustPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPS": [
-PPPPPPPPPPPPPPPPunt_id": 1, "amount": "1000.00", "type": "debit"},
-          {"acc          {"acc          {"acc          { "credit"}
+| Method | Endpoint         | Description              |
+| ------ | ---------------- | ------------------------ |
+| GET    | `/ping`          | Health check             |
+| POST   | `/accounts`      | Create an account        |
+| GET    | `/accounts`      | List all accounts        |
+| POST   | `/entries`       | Post a journal entry     |
+| GET    | `/trial-balance` | Get trial balance report |
+
+## Example Usage
+
+Create accounts:
+
+    curl -X POST http://localhost:8000/accounts \
+      -H "Content-Type: application/json" \
+      -d '{"name": "Cash"}'
+
+Post a journal entry:
+
+    curl -X POST http://localhost:8000/entries \
+      -H "Content-Type: application/json" \
+      -d '{
+        "description": "Customer payment received",
+        "lines": [
+          {"account_id": 1, "amount": "1000.00", "type": "debit"},
+          {"account_id": 2, "amount": "1000.00", "type": "credit"}
         ]
       }'
 
