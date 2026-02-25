@@ -39,3 +39,28 @@ def test_create_entry_unbalanced():
         ]
     })
     assert r.status_code == 422
+
+
+def test_trial_balance():
+    acc1 = make_account()
+    acc2 = make_account()
+
+    client.post("/entries", json={
+        "description": "Test deposit",
+        "lines": [
+            {"account_id": acc1, "amount": "250.00", "type": "debit"},
+            {"account_id": acc2, "amount": "250.00", "type": "credit"},
+        ]
+    })
+
+    r = client.get("/trial-balance")
+    assert r.status_code == 200
+
+    data = {row["account_id"]: row for row in r.json()}
+    assert data[acc1]["total_debits"] == "250.00"
+    assert data[acc1]["total_credits"] == "0.00"
+    assert data[acc1]["balance"] == "250.00"
+
+    assert data[acc2]["total_debits"] == "0.00"
+    assert data[acc2]["total_credits"] == "250.00"
+    assert data[acc2]["balance"] == "-250.00"

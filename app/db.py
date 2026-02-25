@@ -4,7 +4,8 @@ import os
 from typing import Iterator
 
 from dotenv import load_dotenv
-load_dotenv()  # <-- добавь
+env_file = os.getenv("ENV_FILE", ".env")
+load_dotenv(env_file)
 
 
 DATABASE_URL = os.getenv("DATABASE_URL")
